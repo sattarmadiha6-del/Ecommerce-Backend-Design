@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brand – My Cart</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#f5f5f5;}
+a{text-decoration:none;color:inherit;}
+
+/* ── TOP NAV (simplified – no search on cart page) ── */
+.top-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:12px 0;}
+.top-nav .wrap{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 16px;}
+.logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:18px;color:#1a73e8;}
+.logo-icon{width:28px;height:28px;background:#1a73e8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}
+.top-icons{display:flex;gap:20px;align-items:center;}
+.top-icon{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:#555;font-size:11px;}
+.top-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.top-icon:hover{color:#1a73e8;}
+
+/* ── PAGE BODY ── */
+.page-wrap{max-width:1000px;margin:24px auto;padding:0 16px;}
+.page-title{font-size:20px;font-weight:700;color:#222;margin-bottom:16px;}
+
+/* ── MAIN GRID ── */
+.cart-grid{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start;}
+
+/* ── CART ITEMS ── */
+.cart-box{background:#fff;border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;}
+.cart-item{display:flex;align-items:flex-start;gap:14px;padding:16px;border-bottom:1px solid #f0f0f0;position:relative;}
+.cart-item:last-child{border-bottom:none;}
+.cart-thumb{width:80px;height:80px;min-width:80px;background:#f5f5f5;border-radius:6px;border:1px solid #e8e8e8;display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;}
+.cart-info{flex:1;}
+.cart-info h4{font-size:14px;font-weight:500;color:#222;margin-bottom:4px;}
+.cart-info .meta{font-size:12px;color:#888;margin-bottom:2px;}
+.cart-info .seller{font-size:12px;color:#888;margin-bottom:8px;}
+.cart-actions{display:flex;gap:8px;margin-top:4px;}
+.btn-remove{background:#fff;border:1px solid #e0e0e0;color:#555;padding:4px 12px;border-radius:4px;font-size:12px;cursor:pointer;}
+.btn-remove:hover{border-color:#f44336;color:#f44336;}
+.btn-save{background:#fff;border:1px solid #e0e0e0;color:#1a73e8;padding:4px 12px;border-radius:4px;font-size:12px;cursor:pointer;}
+.btn-save:hover{background:#e8f0fe;}
+.cart-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:110px;}
+.cart-price{font-size:15px;font-weight:600;color:#222;}
+.qty-select{border:1px solid #e0e0e0;border-radius:4px;padding:5px 8px;font-size:13px;background:#fff;cursor:pointer;outline:none;}
+
+/* ── CART FOOTER ── */
+.cart-footer{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-top:1px solid #f0f0f0;background:#fff;}
+.btn-back{background:#1a73e8;color:#fff;border:none;padding:9px 18px;border-radius:4px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:500;}
+.btn-back:hover{background:#1565c0;}
+.btn-remove-all{background:#fff;border:none;color:#1a73e8;font-size:13px;cursor:pointer;padding:9px 0;}
+.btn-remove-all:hover{text-decoration:underline;}
+
+/* ── ORDER SUMMARY ── */
+.summary-box{background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:16px;}
+.coupon-row{display:flex;gap:8px;margin-bottom:16px;}
+.coupon-row input{flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:8px 10px;font-size:13px;outline:none;}
+.coupon-row input:focus{border-color:#1a73e8;}
+.btn-apply{background:#fff;border:1px solid #1a73e8;color:#1a73e8;padding:8px 16px;border-radius:4px;font-size:13px;cursor:pointer;font-weight:500;white-space:nowrap;}
+.btn-apply:hover{background:#e8f0fe;}
+.summary-lines{border-top:1px solid #f0f0f0;padding-top:12px;margin-bottom:12px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;}
+.summary-row .label{color:#888;}
+.summary-row .val{color:#222;}
+.summary-row .val.discount{color:#f44336;font-weight:500;}
+.summary-row .val.tax{color:#26a541;font-weight:500;}
+.summary-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e8e8e8;padding-top:12px;margin-bottom:14px;}
+.summary-total .label{font-size:14px;font-weight:600;color:#222;}
+.summary-total .amount{font-size:20px;font-weight:700;color:#222;}
+.btn-checkout{display:block;width:100%;background:#00b517;color:#fff;border:none;padding:12px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:12px;}
+.btn-checkout:hover{background:#009914;}
+.payment-icons{display:flex;justify-content:center;gap:8px;align-items:center;}
+.pay-icon{height:22px;padding:2px 6px;background:#fff;border:1px solid #e0e0e0;border-radius:3px;font-size:10px;font-weight:700;display:flex;align-items:center;color:#333;}
+.pay-amex{color:#2e77bc;}
+.pay-mc{color:#eb001b;}
+.pay-pp{color:#003087;}
+.pay-visa{color:#1a1f71;}
+.pay-ap{color:#000;}
+
+/* ── TRUST BADGES ── */
+.trust-strip{max-width:1000px;margin:16px auto 0;padding:0 16px;}
+.trust-inner{background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:16px 24px;display:flex;gap:0;}
+.trust-item{flex:1;display:flex;align-items:center;gap:12px;padding:0 16px;border-right:1px solid #f0f0f0;}
+.trust-item:last-child{border-right:none;}
+.trust-icon{width:40px;height:40px;min-width:40px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.trust-text h5{font-size:13px;font-weight:600;color:#222;margin-bottom:2px;}
+.trust-text p{font-size:12px;color:#888;}
+
+/* ── SAVED FOR LATER ── */
+.saved-section{max-width:1000px;margin:20px auto 0;padding:0 16px;}
+.saved-box{background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:16px;}
+.saved-box h3{font-size:15px;font-weight:600;margin-bottom:14px;}
+.saved-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.saved-card{border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;cursor:pointer;}
+.saved-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.saved-img{width:100%;height:140px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:60px;}
+.saved-info{padding:10px;}
+.saved-info .price{font-size:15px;font-weight:700;color:#222;margin-bottom:4px;}
+.saved-info .name{font-size:12px;color:#555;margin-bottom:10px;line-height:1.4;}
+.btn-move{display:flex;align-items:center;gap:6px;color:#1a73e8;font-size:13px;background:none;border:none;cursor:pointer;padding:0;font-weight:500;}
+.btn-move:hover{text-decoration:underline;}
+.btn-move svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;}
+
+/* ── PROMO BANNER ── */
+.promo-banner{max-width:1000px;margin:20px auto 0;padding:0 16px;}
+.promo-inner{background:linear-gradient(135deg,#1565c0,#1a73e8,#2196f3);border-radius:8px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;}
+.promo-inner h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;}
+.promo-inner p{font-size:13px;color:rgba(255,255,255,.8);}
+.btn-shop-now{background:#ff9800;color:#fff;border:none;padding:12px 28px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.btn-shop-now:hover{background:#f57c00;}
+
+/* ── FOOTER ── */
+footer{background:#fff;margin-top:24px;padding:28px 0 0;border-top:1px solid #e8e8e8;}
+.footer-grid{max-width:1200px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:220px repeat(4,1fr) 160px;gap:24px;margin-bottom:24px;}
+.footer-brand p{font-size:12px;color:#888;margin-top:8px;line-height:1.6;}
+.footer-social{display:flex;gap:8px;margin-top:10px;}
+.soc{width:28px;height:28px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;color:#555;}
+.soc:hover{background:#1a73e8;color:#fff;}
+.footer-col h4{font-size:14px;font-weight:600;margin-bottom:10px;color:#222;}
+.footer-col a{display:block;font-size:13px;color:#666;margin-bottom:7px;}
+.footer-col a:hover{color:#1a73e8;}
+.app-badges{display:flex;flex-direction:column;gap:8px;}
+.app-badge{background:#000;color:#fff;border-radius:6px;padding:7px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.app-badge svg{width:18px;height:18px;fill:#fff;}
+.ab-text{font-size:9px;opacity:.7;display:block;}
+.ab-name{font-size:12px;font-weight:600;display:block;}
+.footer-bottom{border-top:1px solid #e8e8e8;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
+.footer-bottom p{font-size:12px;color:#888;}
+.footer-bottom select{border:1px solid #e0e0e0;padding:4px 8px;border-radius:4px;font-size:12px;background:#fff;outline:none;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">B</div>Brand
+    </a>
+    <div class="top-icons">
+      <div class="top-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+      <div class="top-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Message</div>
+      <div class="top-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Orders</div>
+      <div class="top-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>My cart</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE TITLE -->
+<div class="page-wrap">
+  <h1 class="page-title">My cart (3)</h1>
+
+  <div class="cart-grid">
+    <!-- CART ITEMS -->
+    <div>
+      <div class="cart-box">
+
+        <!-- Item 1 -->
+        <div class="cart-item">
+          <div class="cart-thumb">👕</div>
+          <div class="cart-info">
+            <h4>T-shirts with multiple colors, for men and lady</h4>
+            <div class="meta">Size: medium, Color: blue, Material: Plastic</div>
+            <div class="seller">Seller: Artel Market</div>
+            <div class="cart-actions">
+              <button class="btn-remove">Remove</button>
+              <button class="btn-save">Save for later</button>
+            </div>
+          </div>
+          <div class="cart-right">
+            <div class="cart-price">$78.99</div>
+            <select class="qty-select">
+              <option>Qty: 9</option>
+              <option>Qty: 1</option><option>Qty: 2</option><option>Qty: 3</option>
+              <option>Qty: 5</option><option>Qty: 10</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="cart-item">
+          <div class="cart-thumb">👜</div>
+          <div class="cart-info">
+            <h4>T-shirts with multiple colors, for men and lady</h4>
+            <div class="meta">Size: medium, Color: blue, Material: Plastic</div>
+            <div class="seller">Seller: Best factory LLC</div>
+            <div class="cart-actions">
+              <button class="btn-remove">Remove</button>
+              <button class="btn-save">Save for later</button>
+            </div>
+          </div>
+          <div class="cart-right">
+            <div class="cart-price">$39.00</div>
+            <select class="qty-select">
+              <option>Qty: 3</option>
+              <option>Qty: 1</option><option>Qty: 2</option>
+              <option>Qty: 5</option><option>Qty: 10</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="cart-item">
+          <div class="cart-thumb">🏺</div>
+          <div class="cart-info">
+            <h4>T-shirts with multiple colors, for men and lady</h4>
+            <div class="meta">Size: medium, Color: blue, Material: Plastic</div>
+            <div class="seller">Seller: Artel Market</div>
+            <div class="cart-actions">
+              <button class="btn-remove">Remove</button>
+              <button class="btn-save">Save for later</button>
+            </div>
+          </div>
+          <div class="cart-right">
+            <div class="cart-price">$170.50</div>
+            <select class="qty-select">
+              <option>Qty: 1</option>
+              <option>Qty: 2</option><option>Qty: 3</option>
+              <option>Qty: 5</option><option>Qty: 10</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="cart-footer">
+          <button class="btn-back" onclick="history.back()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to shop
+          </button>
+          <button class="btn-remove-all">Remove all</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="summary-box">
+      <div style="font-size:13px;font-weight:500;color:#888;margin-bottom:8px;">Have a coupon?</div>
+      <div class="coupon-row">
+        <input type="text" placeholder="Add coupon"/>
+        <button class="btn-apply">Apply</button>
+      </div>
+      <div class="summary-lines">
+        <div class="summary-row"><span class="label">Subtotal:</span><span class="val">$1403.97</span></div>
+        <div class="summary-row"><span class="label">Discount:</span><span class="val discount">- $60.00</span></div>
+        <div class="summary-row"><span class="label">Tax:</span><span class="val tax">+ $14.00</span></div>
+      </div>
+      <div class="summary-total">
+        <span class="label">Total:</span>
+        <span class="amount">$1357.97</span>
+      </div>
+      <button class="btn-checkout">Checkout</button>
+      <div class="payment-icons">
+        <div class="pay-icon pay-amex" style="font-size:8px;font-weight:800;letter-spacing:-0.5px;">AMEX</div>
+        <div class="pay-icon pay-mc" style="display:flex;gap:0;padding:2px 4px;">
+          <div style="width:14px;height:14px;background:#eb001b;border-radius:50%;opacity:0.9;"></div>
+          <div style="width:14px;height:14px;background:#f79e1b;border-radius:50%;opacity:0.9;margin-left:-6px;"></div>
+        </div>
+        <div class="pay-icon pay-pp" style="font-size:9px;font-weight:800;color:#003087;">Pay<span style="color:#009cde;">Pal</span></div>
+        <div class="pay-icon pay-visa" style="font-size:11px;font-weight:800;font-style:italic;color:#1a1f71;">VISA</div>
+        <div class="pay-icon pay-ap" style="font-size:10px;font-weight:600;">&#xF8FF; Pay</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BADGES -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-text"><h5>Secure payment</h5><p>Have you ever finally just</p></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💬</div>
+      <div class="trust-text"><h5>Customer support</h5><p>Have you ever finally just</p></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>
+      <div class="trust-text"><h5>Free delivery</h5><p>Have you ever finally just</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVED FOR LATER -->
+<div class="saved-section">
+  <div class="saved-box">
+    <h3>Saved for later</h3>
+    <div class="saved-grid">
+      <div class="saved-card">
+        <div class="saved-img">📱</div>
+        <div class="saved-info">
+          <div class="price">$99.50</div>
+          <div class="name">GoPro HERO6 4K Action Camera - Black</div>
+          <button class="btn-move">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Move to cart
+          </button>
+        </div>
+      </div>
+      <div class="saved-card">
+        <div class="saved-img">📲</div>
+        <div class="saved-info">
+          <div class="price">$99.50</div>
+          <div class="name">GoPro HERO6 4K Action Camera - Black</div>
+          <button class="btn-move">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Move to cart
+          </button>
+        </div>
+      </div>
+      <div class="saved-card">
+        <div class="saved-img">⌚</div>
+        <div class="saved-info">
+          <div class="price">$99.50</div>
+          <div class="name">GoPro HERO6 4K Action Camera - Black</div>
+          <button class="btn-move">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Move to cart
+          </button>
+        </div>
+      </div>
+      <div class="saved-card">
+        <div class="saved-img">💻</div>
+        <div class="saved-info">
+          <div class="price">$99.50</div>
+          <div class="name">GoPro HERO6 4K Action Camera - Black</div>
+          <button class="btn-move">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Move to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-inner">
+    <div>
+      <h3>Super discount on more than 100 USD</h3>
+      <p>Have you ever finally just write dummy info</p>
+    </div>
+    <button class="btn-shop-now">Shop now</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom:8px;"><div class="logo-icon">B</div>Brand</a>
+      <p>Best information about the company gies here but now lorem ipsum is</p>
+      <div class="footer-social">
+        <div class="soc">f</div><div class="soc">t</div><div class="soc">in</div><div class="soc">G+</div><div class="soc">▶</div>
+      </div>
+    </div>
+    <div class="footer-col"><h4>About</h4><a href="#">About Us</a><a href="#">Find store</a><a href="#">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Partnership</h4><a href="#">About Us</a><a href="#">Find store</a><a href="#">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Information</h4><a href="#">Help Center</a><a href="#">Money Refund</a><a href="#">Shipping</a><a href="#">Contact us</a></div>
+    <div class="footer-col"><h4>For users</h4><a href="#">Login</a><a href="#">Register</a><a href="#">Settings</a><a href="#">My Orders</a></div>
+    <div class="footer-col">
+      <h4>Get app</h4>
+      <div class="app-badges">
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><div><span class="ab-text">Download on the</span><span class="ab-name">App Store</span></div></div>
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M3.18 23.76c.3.17.63.24.97.21l12.5-7.21-2.61-2.62-10.86 9.62zM.27 1.5C.1 1.83 0 2.22 0 2.68v18.64c0 .46.1.85.27 1.18l.06.06 10.44-10.44v-.24L.33 1.44l-.06.06zM20.9 10.24l-2.82-1.63-2.94 2.94 2.94 2.94 2.85-1.64c.81-.47.81-1.23-.03-1.61zM4.15.24L16.65 7.45l-2.61 2.61L3.18.24C3.5.07 3.87.1 4.15.24z"/></svg><div><span class="ab-text">Get it on</span><span class="ab-name">Google Play</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2023 Ecommerce.</p>
+    <select><option>🇬🇧 English</option></select>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.btn-remove').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    if(confirm('Remove this item?')){
+      this.closest('.cart-item').style.opacity='0';
+      this.closest('.cart-item').style.transition='opacity .3s';
+      setTimeout(()=>this.closest('.cart-item').remove(),300);
+    }
+  });
+});
+document.querySelectorAll('.btn-move').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    this.textContent='✓ Added to cart';
+    this.style.color='#26a541';
+  });
+});
+</script>
+</body>
+</html>

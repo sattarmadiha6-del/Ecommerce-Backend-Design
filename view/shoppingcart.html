@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Shopping Cart</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f2f2f2; color: #111; font-size: 14px; }
+
+  /* HEADER */
+  .header {
+    background: #fff;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid #e8e8e8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #111;
+    padding: 2px 6px 2px 0;
+    line-height: 1;
+  }
+  .header h1 { font-size: 17px; font-weight: 600; color: #111; }
+
+  /* CART SECTION */
+  .cart-section { background: #fff; margin-bottom: 8px; }
+
+  .cart-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .cart-item:last-child { border-bottom: none; }
+
+  .item-top { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+
+  .item-thumb {
+    width: 70px; height: 70px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    background: #f8f8f8;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 32px;
+    overflow: hidden;
+  }
+  .item-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+  .item-details { flex: 1; min-width: 0; }
+  .item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .item-sub {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  .item-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-size: 20px;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .item-bottom { display: flex; align-items: center; justify-content: space-between; }
+
+  .qty-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .qty-btn {
+    width: 36px; height: 36px;
+    border: none;
+    background: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    color: #333;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    user-select: none;
+  }
+  .qty-btn:active { background: #f0f0f0; }
+  .qty-num {
+    width: 40px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #111;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    height: 36px;
+    line-height: 36px;
+  }
+  .item-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  /* SUMMARY */
+  .summary-section { background: #fff; padding: 16px; margin-bottom: 8px; }
+  .sum-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .sum-row:last-of-type { margin-bottom: 0; }
+  .sum-row.total {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    padding-top: 12px;
+    margin-top: 10px;
+    border-top: 1px solid #ebebeb;
+  }
+
+  /* CHECKOUT BUTTON */
+  .checkout-wrap { background: #fff; padding: 12px 16px 16px; margin-bottom: 8px; }
+  .checkout-btn {
+    width: 100%;
+    background: #3cb371;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 0;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: background 0.15s;
+  }
+  .checkout-btn:hover { background: #2e9e5e; }
+  .checkout-btn:active { background: #258050; transform: scale(0.99); }
+
+  /* SAVED FOR LATER */
+  .saved-section { background: #fff; margin-bottom: 8px; }
+  .saved-header {
+    padding: 16px 16px 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .saved-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .saved-item:last-child { border-bottom: none; }
+  .saved-thumb {
+    width: 64px; height: 64px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    background: #f8f8f8;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 28px;
+    overflow: hidden;
+  }
+  .saved-info { flex: 1; min-width: 0; }
+  .saved-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 2px;
+    line-height: 1.4;
+  }
+  .saved-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+  }
+  .saved-actions { display: flex; gap: 8px; }
+  .btn-move {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a6fc4;
+    border: 1px solid #1a6fc4;
+    background: #fff;
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-move:hover { background: #eaf3ff; }
+  .btn-remove {
+    font-size: 12px;
+    font-weight: 500;
+    color: #c94040;
+    border: 1px solid #c94040;
+    background: #fff;
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-remove:hover { background: #fff0f0; }
+
+  /* EMPTY CART */
+  .empty-msg {
+    text-align: center;
+    padding: 30px 16px;
+    color: #aaa;
+    font-size: 14px;
+    display: none;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #222;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    white-space: nowrap;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* CONTEXT MENU */
+  .ctx-menu {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    z-index: 200;
+    min-width: 160px;
+    display: none;
+  }
+  .ctx-menu.show { display: block; }
+  .ctx-item {
+    padding: 13px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 1px solid #f2f2f2;
+    color: #111;
+  }
+  .ctx-item:last-child { border-bottom: none; }
+  .ctx-item:hover { background: #f7f7f7; }
+  .ctx-item.danger { color: #c94040; }
+  .ctx-overlay { position: fixed; inset: 0; z-index: 199; display: none; }
+  .ctx-overlay.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <button class="back-btn" onclick="history.back()">&#8592;</button>
+  <h1>Shopping cart</h1>
+</div>
+
+<!-- CART ITEMS -->
+<div class="cart-section" id="cartSection">
+  <div class="empty-msg" id="emptyMsg">Your cart is empty</div>
+
+  <div class="cart-item" data-id="0" data-unit="39.50">
+    <div class="item-top">
+      <div class="item-thumb">👕</div>
+      <div class="item-details">
+        <div class="item-name">T-shirts with multiple colors for men</div>
+        <div class="item-sub">Size: medium, Color: blue</div>
+        <div class="item-sub">Seller: Artel Market</div>
+      </div>
+      <button class="item-menu-btn" onclick="openMenu(this, 0)">&#8942;</button>
+    </div>
+    <div class="item-bottom">
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(0, -1)">&#8722;</button>
+        <div class="qty-num" id="qty-0">2</div>
+        <button class="qty-btn" onclick="changeQty(0, 1)">+</button>
+      </div>
+      <div class="item-price">$<span id="price-0">79.00</span></div>
+    </div>
+  </div>
+
+  <div class="cart-item" data-id="1" data-unit="78.99">
+    <div class="item-top">
+      <div class="item-thumb">🎒</div>
+      <div class="item-details">
+        <div class="item-name">Solid Backpack blue jeans large size</div>
+        <div class="item-sub">Size: medium, Color: blue</div>
+        <div class="item-sub">Seller: Artel Market</div>
+      </div>
+      <button class="item-menu-btn" onclick="openMenu(this, 1)">&#8942;</button>
+    </div>
+    <div class="item-bottom">
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(1, -1)">&#8722;</button>
+        <div class="qty-num" id="qty-1">1</div>
+        <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+      </div>
+      <div class="item-price">$<span id="price-1">78.99</span></div>
+    </div>
+  </div>
+
+  <div class="cart-item" data-id="2" data-unit="39.50">
+    <div class="item-top">
+      <div class="item-thumb">🫖</div>
+      <div class="item-details">
+        <div class="item-name">Water boiler black for kitchen, 1200 Watt</div>
+        <div class="item-sub">Size: medium, Color: black</div>
+        <div class="item-sub">Seller: Artel Market</div>
+      </div>
+      <button class="item-menu-btn" onclick="openMenu(this, 2)">&#8942;</button>
+    </div>
+    <div class="item-bottom">
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(2, -1)">&#8722;</button>
+        <div class="qty-num" id="qty-2">2</div>
+        <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+      </div>
+      <div class="item-price">$<span id="price-2">79.00</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-section">
+  <div class="sum-row"><span id="itemsLabel">Items (3):</span><span id="subtotalVal">$32.00</span></div>
+  <div class="sum-row"><span>Shipping:</span><span>$10.00</span></div>
+  <div class="sum-row"><span>Tax:</span><span>$7.00</span></div>
+  <div class="sum-row total"><span>Total:</span><span id="totalVal">$220.00</span></div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkout-wrap">
+  <button class="checkout-btn" id="checkoutBtn" onclick="onCheckout()">Checkout (3 items)</button>
+</div>
+
+<!-- SAVED FOR LATER -->
+<div class="saved-section" id="savedSection">
+  <div class="saved-header">Saved for later</div>
+  <div class="saved-item" data-sid="0">
+    <div class="saved-thumb">🎧</div>
+    <div class="saved-info">
+      <div class="saved-name">Regular Fit Resort Shirt</div>
+      <div class="saved-price">$57.70</div>
+      <div class="saved-actions">
+        <button class="btn-move" onclick="moveToCart(0)">Move to cart</button>
+        <button class="btn-remove" onclick="removeSaved(0)">Remove</button>
+      </div>
+    </div>
+  </div>
+  <div class="saved-item" data-sid="1">
+    <div class="saved-thumb">📱</div>
+    <div class="saved-info">
+      <div class="saved-name">Regular Fit Resort Shirt</div>
+      <div class="saved-price">$57.70</div>
+      <div class="saved-actions">
+        <button class="btn-move" onclick="moveToCart(1)">Move to cart</button>
+        <button class="btn-remove" onclick="removeSaved(1)">Remove</button>
+      </div>
+    </div>
+  </div>
+  <div class="saved-item" data-sid="2">
+    <div class="saved-thumb">⌚</div>
+    <div class="saved-info">
+      <div class="saved-name">Regular Fit Resort Shirt</div>
+      <div class="saved-price">$57.70</div>
+      <div class="saved-actions">
+        <button class="btn-move" onclick="moveToCart(2)">Move to cart</button>
+        <button class="btn-remove" onclick="removeSaved(2)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-overlay" id="ctxOverlay" onclick="closeMenu()"></div>
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" onclick="saveForLater()">Save for later</div>
+  <div class="ctx-item danger" onclick="removeItem()">Remove from cart</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const SHIPPING = 10;
+  const TAX = 7;
+
+  // Cart data
+  const cartItems = [
+    { id: 0, unit: 39.50, qty: 2 },
+    { id: 1, unit: 78.99, qty: 1 },
+    { id: 2, unit: 39.50, qty: 2 },
+  ];
+
+  let activeMenuId = null;
+
+  function getItem(id) { return cartItems.find(i => i.id === id); }
+
+  function changeQty(id, delta) {
+    const item = getItem(id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) {
+      removeCartItem(id);
+      return;
+    }
+    document.getElementById('qty-' + id).textContent = item.qty;
+    document.getElementById('price-' + id).textContent = (item.unit * item.qty).toFixed(2);
+    updateSummary();
+  }
+
+  function removeCartItem(id) {
+    const idx = cartItems.findIndex(i => i.id === id);
+    if (idx !== -1) cartItems.splice(idx, 1);
+    const el = document.querySelector(`.cart-item[data-id="${id}"]`);
+    if (el) el.remove();
+    updateSummary();
+    showToast('Item removed from cart');
+    checkEmpty();
+  }
+
+  function checkEmpty() {
+    const items = document.querySelectorAll('.cart-item');
+    document.getElementById('emptyMsg').style.display = items.length === 0 ? 'block' : 'none';
+  }
+
+  function updateSummary() {
+    let subtotal = 0;
+    let totalQty = 0;
+    cartItems.forEach(i => { subtotal += i.unit * i.qty; totalQty += i.qty; });
+    const total = subtotal + SHIPPING + TAX;
+    document.getElementById('itemsLabel').textContent = `Items (${cartItems.length}):`;
+    document.getElementById('subtotalVal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('totalVal').textContent = '$' + total.toFixed(2);
+    document.getElementById('checkoutBtn').textContent = `Checkout (${totalQty} item${totalQty !== 1 ? 's' : ''})`;
+  }
+
+  function onCheckout() {
+    showToast('Proceeding to checkout…');
+  }
+
+  // CONTEXT MENU
+  function openMenu(btn, id) {
+    activeMenuId = id;
+    const menu = document.getElementById('ctxMenu');
+    const overlay = document.getElementById('ctxOverlay');
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+    menu.style.right = '16px';
+    menu.classList.add('show');
+    overlay.classList.add('show');
+  }
+
+  function closeMenu() {
+    document.getElementById('ctxMenu').classList.remove('show');
+    document.getElementById('ctxOverlay').classList.remove('show');
+    activeMenuId = null;
+  }
+
+  function saveForLater() {
+    closeMenu();
+    showToast('Moved to saved for later');
+  }
+
+  function removeItem() {
+    const id = activeMenuId;
+    closeMenu();
+    if (id !== null) removeCartItem(id);
+  }
+
+  // SAVED FOR LATER
+  function moveToCart(sid) {
+    const el = document.querySelector(`.saved-item[data-sid="${sid}"]`);
+    if (el) el.remove();
+    showToast('Item added to cart');
+  }
+
+  function removeSaved(sid) {
+    const el = document.querySelector(`.saved-item[data-sid="${sid}"]`);
+    if (el) el.remove();
+    const remaining = document.querySelectorAll('.saved-item');
+    if (remaining.length === 0) {
+      document.getElementById('savedSection').style.display = 'none';
+    }
+    showToast('Removed from saved');
+  }
+
+  // TOAST
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // Init
+  updateSummary();
+</script>
+</body>
+</html>
