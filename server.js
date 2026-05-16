@@ -30,9 +30,12 @@ app.set('views', path.join(__dirname, 'views'));
 // ─────────────────────────────
 // MONGODB CONNECTION
 // ─────────────────────────────
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce')
-  .then(() => console.log('✅ MongoDB Connected!'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ MongoDB Connected!'))
+.catch(err => console.log('❌ MongoDB Error:', err));
 
 // ─────────────────────────────
 // ROUTES
