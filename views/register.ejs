@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Register – Brand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f5f5f5;min-height:100vh;display:flex;flex-direction:column;}
+.top-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:12px 0;}
+.top-nav .wrap{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 16px;}
+.logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:18px;color:#1a73e8;text-decoration:none;}
+.logo-icon{width:28px;height:28px;background:#1a73e8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 16px;}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:36px;width:100%;max-width:420px;}
+.card h2{font-size:22px;font-weight:700;color:#222;margin-bottom:6px;}
+.card p{font-size:13px;color:#888;margin-bottom:24px;}
+.error-box{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:10px 14px;border-radius:4px;font-size:13px;margin-bottom:16px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:13px;font-weight:500;color:#333;margin-bottom:6px;}
+.form-group input{width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:4px;font-size:14px;outline:none;transition:border-color .2s;}
+.form-group input:focus{border-color:#1a73e8;}
+.btn-submit{width:100%;background:#1a73e8;color:#fff;border:none;padding:12px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;}
+.btn-submit:hover{background:#1565c0;}
+.divider{text-align:center;color:#888;font-size:13px;margin:16px 0;}
+.link-row{text-align:center;font-size:13px;color:#555;}
+.link-row a{color:#1a73e8;font-weight:500;}
+.link-row a:hover{text-decoration:underline;}
+.hint{font-size:11px;color:#aaa;margin-top:4px;}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <div class="wrap">
+    <a href="/" class="logo"><div class="logo-icon">B</div>Brand</a>
+    <a href="/login" style="color:#1a73e8;font-size:13px;font-weight:500;">Already have account?</a>
+  </div>
+</nav>
+<div class="page">
+  <div class="card">
+    <h2>Create account</h2>
+    <p>Join Brand and start shopping today</p>
+    <% if(typeof error !== 'undefined' && error){ %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <label>Full name</label>
+        <input type="text" name="name" placeholder="John Doe" required/>
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" name="email" placeholder="you@example.com" required/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Min 6 characters" required/>
+        <div class="hint">Must be at least 6 characters</div>
+      </div>
+      <div class="form-group">
+        <label>Confirm password</label>
+        <input type="password" name="confirmPassword" placeholder="Repeat password" required/>
+      </div>
+      <button type="submit" class="btn-submit">Create Account</button>
+    </form>
+    <div class="divider">or</div>
+    <div class="link-row">
+      Already have an account? <a href="/login">Login here</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

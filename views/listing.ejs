@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title><%= typeof title !== 'undefined' ? title : 'Products' %> – Brand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#f5f5f5;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+.top-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 0;}
+.top-nav .wrap{display:flex;align-items:center;gap:12px;max-width:1200px;margin:0 auto;padding:0 16px;}
+.logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:18px;color:#1a73e8;white-space:nowrap;}
+.logo-icon{width:28px;height:28px;background:#1a73e8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}
+.search-bar{flex:1;display:flex;border:1px solid #d0d0d0;border-radius:4px;overflow:hidden;}
+.search-bar input{flex:1;padding:8px 12px;border:none;outline:none;font-size:13px;}
+.search-bar select{border:none;border-left:1px solid #e0e0e0;padding:0 10px;background:#f8f8f8;font-size:12px;outline:none;cursor:pointer;color:#333;}
+.search-bar button{background:#1a73e8;color:#fff;border:none;padding:8px 22px;font-size:13px;cursor:pointer;font-weight:500;}
+.search-bar button:hover{background:#1565c0;}
+.top-icons{display:flex;gap:20px;align-items:center;}
+.top-icon{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:#555;font-size:11px;}
+.top-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.top-icon:hover{color:#1a73e8;}
+.sec-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:8px 0;}
+.sec-nav .wrap{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 16px;}
+.sec-nav-left{display:flex;gap:24px;align-items:center;}
+.sec-nav-left a{font-size:13px;color:#333;}
+.sec-nav-left a:hover{color:#1a73e8;}
+.all-cat{display:flex;align-items:center;gap:5px;font-weight:500;}
+.breadcrumb{max-width:1200px;margin:12px auto 0;padding:0 16px;}
+.breadcrumb span{font-size:13px;color:#888;}
+.sep{margin:0 6px;}
+.current{color:#333;}
+.main-layout{max-width:1200px;margin:12px auto 0;padding:0 16px;display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:start;}
+.sidebar{background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:0 0 8px;}
+.filter-section{padding:14px 16px;border-bottom:1px solid #f0f0f0;}
+.filter-section:last-child{border-bottom:none;}
+.filter-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:10px;}
+.filter-header h4{font-size:14px;font-weight:600;color:#222;}
+.arrow{font-size:11px;color:#888;}
+.filter-body{}
+.filter-body.hidden{display:none;}
+.filter-link{display:block;font-size:13px;color:#555;padding:4px 0;cursor:pointer;text-decoration:none;}
+.filter-link:hover,.filter-link.active{color:#1a73e8;font-weight:500;}
+.price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.price-inputs input{border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:12px;width:100%;outline:none;}
+.btn-apply{display:block;width:100%;background:#fff;border:1px solid #1a73e8;color:#1a73e8;padding:7px;border-radius:4px;cursor:pointer;margin-top:10px;font-size:13px;}
+.btn-apply:hover{background:#e8f0fe;}
+.results-header{background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.results-count{font-size:13px;color:#555;}
+.results-count strong{color:#222;}
+.sort-select{border:1px solid #e0e0e0;border-radius:4px;padding:6px 10px;font-size:13px;background:#fff;outline:none;cursor:pointer;}
+.product-list{}
+.product-card{background:#fff;border:1px solid #e8e8e8;border-top:none;display:flex;cursor:pointer;position:relative;transition:box-shadow .2s;}
+.product-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.product-card:first-child{border-top:1px solid #e8e8e8;border-radius:6px 6px 0 0;}
+.product-card:last-child{border-radius:0 0 6px 6px;}
+.prod-image-wrap{width:220px;min-width:220px;height:200px;overflow:hidden;background:#f8f8f8;}
+.prod-image-wrap img{width:100%;height:100%;object-fit:cover;}
+.prod-details{flex:1;padding:16px 20px;}
+.prod-title{font-size:15px;font-weight:600;color:#222;margin-bottom:6px;}
+.prod-price-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.prod-price{font-size:20px;font-weight:700;color:#1a1a1a;}
+.prod-old-price{font-size:14px;color:#aaa;text-decoration:line-through;}
+.prod-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.prod-stars{display:flex;gap:1px;}
+.star-filled{color:#ffc107;font-size:13px;}
+.star-empty{color:#ddd;font-size:13px;}
+.prod-rating-num{font-size:12px;color:#555;font-weight:500;}
+.prod-orders{font-size:12px;color:#888;}
+.prod-shipping{font-size:12px;color:#26a541;font-weight:500;}
+.prod-desc{font-size:13px;color:#888;line-height:1.6;margin-bottom:10px;}
+.prod-view-link{color:#1a73e8;font-size:13px;font-weight:500;}
+.prod-view-link:hover{text-decoration:underline;}
+.prod-wish{position:absolute;top:12px;right:12px;width:32px;height:32px;background:#fff;border:1px solid #e0e0e0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#888;transition:all .2s;}
+.prod-wish:hover,.prod-wish.liked{background:#fce4ec;border-color:#f48fb1;color:#e91e63;}
+.prod-wish svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.pagination-wrap{background:#fff;border:1px solid #e8e8e8;border-top:none;border-radius:0 0 6px 6px;padding:14px 16px;display:flex;justify-content:flex-end;align-items:center;gap:8px;}
+.page-btn{width:32px;height:32px;border:1px solid #e0e0e0;border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:#555;}
+.page-btn:hover{border-color:#1a73e8;color:#1a73e8;background:#e8f0fe;}
+.page-btn.active{background:#1a73e8;color:#fff;border-color:#1a73e8;}
+.page-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+.newsletter{background:#fff;border-top:1px solid #e8e8e8;padding:36px 16px;text-align:center;margin-top:24px;}
+.newsletter h3{font-size:18px;font-weight:600;margin-bottom:6px;}
+.newsletter p{font-size:13px;color:#888;margin-bottom:16px;}
+.nl-form{display:flex;justify-content:center;max-width:400px;margin:0 auto;}
+.nl-form input{flex:1;padding:10px 14px;border:1px solid #e0e0e0;border-right:none;border-radius:4px 0 0 4px;font-size:13px;outline:none;}
+.nl-form button{background:#1a73e8;color:#fff;border:none;padding:10px 20px;border-radius:0 4px 4px 0;font-size:13px;cursor:pointer;font-weight:500;}
+footer{background:#fff;padding:28px 0 0;}
+.footer-grid{max-width:1200px;margin:0 auto 24px;padding:0 16px;display:grid;grid-template-columns:220px repeat(4,1fr) 160px;gap:24px;}
+.footer-brand p{font-size:12px;color:#888;margin-top:8px;line-height:1.6;}
+.footer-social{display:flex;gap:8px;margin-top:10px;}
+.soc{width:28px;height:28px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;color:#555;}
+.soc:hover{background:#1a73e8;color:#fff;}
+.footer-col h4{font-size:14px;font-weight:600;margin-bottom:10px;color:#222;}
+.footer-col a{display:block;font-size:13px;color:#666;margin-bottom:7px;}
+.footer-col a:hover{color:#1a73e8;}
+.app-badges{display:flex;flex-direction:column;gap:8px;}
+.app-badge{background:#000;color:#fff;border-radius:6px;padding:7px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.app-badge svg{width:18px;height:18px;fill:#fff;}
+.ab-text{font-size:9px;opacity:.7;display:block;}
+.ab-name{font-size:12px;font-weight:600;display:block;}
+.footer-bottom{border-top:1px solid #e8e8e8;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
+.footer-bottom p{font-size:12px;color:#888;}
+.footer-bottom select{border:1px solid #e0e0e0;padding:4px 8px;border-radius:4px;font-size:12px;background:#fff;outline:none;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="wrap">
+    <a href="/" class="logo"><div class="logo-icon">B</div>Brand</a>
+    <form action="/products" method="GET" class="search-bar">
+      <input type="text" name="search" placeholder="Search" value="<%= query && query.search ? query.search : '' %>"/>
+      <select name="category">
+        <option value="">All category</option>
+        <% categories.forEach(function(cat){ %>
+          <option value="<%= cat.slug %>" <%= query && query.category === cat.slug ? 'selected' : '' %>><%= cat.name %></option>
+        <% }); %>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div class="top-icons">
+      <% if(user){ %>
+        <div class="top-icon" onclick="location.href='/profile'">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <%= user.name %>
+        </div>
+      <% } else { %>
+        <div class="top-icon" onclick="location.href='/login'">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Login
+        </div>
+      <% } %>
+      <div class="top-icon" onclick="location.href='/cart'">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        My cart (<%= cartCount %>)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC NAV -->
+<div class="sec-nav">
+  <div class="wrap">
+    <div class="sec-nav-left">
+      <a href="/products" class="all-cat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        All category
+      </a>
+      <a href="/products">Hot offers</a>
+      <a href="/products">Gift boxes</a>
+      <a href="/products">Projects</a>
+      <a href="#">Help ▾</a>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <span><a href="/">Home</a></span><span class="sep">›</span>
+  <span class="current"><%= categoryName %></span>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)">
+        <h4>Category</h4><span class="arrow">▲</span>
+      </div>
+      <div class="filter-body">
+        <a href="/products" class="filter-link <%= !query.category ? 'active' : '' %>">All Products</a>
+        <% categories.forEach(function(cat){ %>
+          <a href="/products?category=<%= cat.slug %>" class="filter-link <%= query && query.category === cat.slug ? 'active' : '' %>">
+            <%= cat.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)">
+        <h4>Price range</h4><span class="arrow">▲</span>
+      </div>
+      <div class="filter-body">
+        <form action="/products" method="GET">
+          <% if(query && query.category){ %><input type="hidden" name="category" value="<%= query.category %>"/><% } %>
+          <% if(query && query.search){ %><input type="hidden" name="search" value="<%= query.search %>"/><% } %>
+          <div class="price-inputs">
+            <input type="number" name="minPrice" placeholder="Min $" value="<%= query && query.minPrice ? query.minPrice : '' %>"/>
+            <input type="number" name="maxPrice" placeholder="Max $" value="<%= query && query.maxPrice ? query.maxPrice : '' %>"/>
+          </div>
+          <button type="submit" class="btn-apply">Apply</button>
+        </form>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content-area">
+    <div class="results-header">
+      <div class="results-count"><strong><%= totalItems %></strong> items found</div>
+      <div>
+        <select class="sort-select" onchange="location.href='?sort='+this.value+'<%= query && query.category ? '&category='+query.category : '' %><%= query && query.search ? '&search='+query.search : '' %>'">
+          <option value="featured" <%= query && query.sort === 'featured' ? 'selected' : '' %>>Featured</option>
+          <option value="low" <%= query && query.sort === 'low' ? 'selected' : '' %>>Price: Low to High</option>
+          <option value="high" <%= query && query.sort === 'high' ? 'selected' : '' %>>Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PRODUCT LIST — MongoDB se real data -->
+    <div class="product-list">
+      <% if(products.length > 0){ %>
+        <% products.forEach(function(product){ %>
+          <div class="product-card" onclick="location.href='/product/<%= product._id %>'">
+            <div class="prod-image-wrap">
+              <img src="<%= product.image ? product.image : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80' %>" alt="<%= product.name %>"/>
+            </div>
+            <div class="prod-details">
+              <div class="prod-title"><%= product.name %></div>
+              <div class="prod-price-row">
+                <span class="prod-price">$<%= product.price.toLocaleString() %></span>
+                <% if(product.oldPrice){ %>
+                  <span class="prod-old-price">$<%= product.oldPrice.toLocaleString() %></span>
+                <% } %>
+              </div>
+              <div class="prod-meta">
+                <div class="prod-stars">
+                  <% for(let i=1;i<=5;i++){ %>
+                    <span class="<%= i<=(product.rating||0) ? 'star-filled':'star-empty' %>">★</span>
+                  <% } %>
+                </div>
+                <span class="prod-rating-num"><%= product.rating || 0 %></span>
+                <span class="prod-orders"><%= product.orderCount || 0 %> orders</span>
+                <% if(product.freeShipping){ %>
+                  <span class="prod-shipping">Free Shipping</span>
+                <% } %>
+              </div>
+              <p class="prod-desc"><%= product.description ? product.description.substring(0,150)+'...' : 'No description available.' %></p>
+              <a href="/product/<%= product._id %>" class="prod-view-link" onclick="event.stopPropagation()">View details →</a>
+            </div>
+            <div class="prod-wish" onclick="event.stopPropagation();this.classList.toggle('liked')">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div style="padding:40px;text-align:center;background:#fff;border-radius:6px;border:1px solid #e8e8e8;">
+          <h3 style="color:#888;margin-bottom:10px;">No products found</h3>
+          <a href="/products" style="color:#1a73e8;">Browse all products</a>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-wrap">
+      <% if(currentPage > 1){ %>
+        <button class="page-btn" onclick="location.href='?page=<%= currentPage-1 %><%= query && query.category ? '&category='+query.category : '' %><%= query && query.search ? '&search='+query.search : '' %>'">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+      <% } %>
+      <% for(let i=1;i<=totalPages;i++){ %>
+        <button class="page-btn <%= i===currentPage ? 'active':'' %>" onclick="location.href='?page=<%= i %><%= query && query.category ? '&category='+query.category : '' %><%= query && query.search ? '&search='+query.search : '' %>'">
+          <%= i %>
+        </button>
+      <% } %>
+      <% if(currentPage < totalPages){ %>
+        <button class="page-btn" onclick="location.href='?page=<%= currentPage+1 %><%= query && query.category ? '&category='+query.category : '' %><%= query && query.search ? '&search='+query.search : '' %>'">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h3>Subscribe on our newsletter</h3>
+  <p>Get daily news on upcoming offers from many suppliers all over the world</p>
+  <form action="/subscribe" method="POST" class="nl-form">
+    <input type="email" name="email" required placeholder="✉  Email"/>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="margin-bottom:8px;"><div class="logo-icon">B</div>Brand</a>
+      <p>Best information about the company goes here but now lorem ipsum is</p>
+      <div class="footer-social"><div class="soc">f</div><div class="soc">t</div><div class="soc">in</div><div class="soc">G+</div><div class="soc">▶</div></div>
+    </div>
+    <div class="footer-col"><h4>About</h4><a href="#">About Us</a><a href="#">Find store</a><a href="/products">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Partnership</h4><a href="#">About Us</a><a href="#">Find store</a><a href="/products">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Information</h4><a href="#">Help Center</a><a href="#">Money Refund</a><a href="#">Shipping</a><a href="#">Contact us</a></div>
+    <div class="footer-col"><h4>For users</h4><a href="/login">Login</a><a href="/register">Register</a><a href="#">Settings</a><a href="#">My Orders</a></div>
+    <div class="footer-col">
+      <h4>Get app</h4>
+      <div class="app-badges">
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><div><span class="ab-text">Download on the</span><span class="ab-name">App Store</span></div></div>
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M3.18 23.76c.3.17.63.24.97.21l12.5-7.21-2.61-2.62-10.86 9.62zM.27 1.5C.1 1.83 0 2.22 0 2.68v18.64c0 .46.1.85.27 1.18l.06.06 10.44-10.44v-.24L.33 1.44l-.06.06zM20.9 10.24l-2.82-1.63-2.94 2.94 2.94 2.94 2.85-1.64c.81-.47.81-1.23-.03-1.61zM4.15.24L16.65 7.45l-2.61 2.61L3.18.24C3.5.07 3.87.1 4.15.24z"/></svg><div><span class="ab-text">Get it on</span><span class="ab-name">Google Play</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <%= new Date().getFullYear() %> Ecommerce.</p>
+    <select><option>🇬🇧 English</option></select>
+  </div>
+</footer>
+
+<script>
+function toggleFilter(header){
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.arrow');
+  body.classList.toggle('hidden');
+  arrow.textContent = body.classList.contains('hidden') ? '▼' : '▲';
+}
+</script>
+</body>
+</html>

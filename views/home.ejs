@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title><%= title %> – Brand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#f5f5f5;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+.top-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 0;}
+.top-nav .container{display:flex;align-items:center;gap:12px;max-width:1200px;margin:0 auto;padding:0 16px;}
+.logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:18px;color:#1a73e8;white-space:nowrap;}
+.logo-icon{width:28px;height:28px;background:#1a73e8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}
+.search-bar{flex:1;display:flex;border:1px solid #e0e0e0;border-radius:4px;overflow:hidden;}
+.search-bar input{flex:1;padding:8px 12px;border:none;outline:none;font-size:13px;}
+.search-bar select{border:none;border-left:1px solid #e0e0e0;padding:0 10px;background:#f8f8f8;font-size:12px;outline:none;cursor:pointer;}
+.search-bar button{background:#1a73e8;color:#fff;border:none;padding:8px 20px;font-size:13px;cursor:pointer;font-weight:500;}
+.search-bar button:hover{background:#1565c0;}
+.top-icons{display:flex;gap:20px;align-items:center;}
+.top-icon{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:#555;font-size:11px;}
+.top-icon svg{width:20px;height:20px;}
+.top-icon:hover{color:#1a73e8;}
+.sec-nav{background:#fff;border-bottom:1px solid #e8e8e8;padding:8px 0;}
+.sec-nav .container{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 16px;}
+.sec-nav-left{display:flex;gap:24px;align-items:center;}
+.sec-nav-left a{font-size:13px;color:#333;white-space:nowrap;}
+.sec-nav-left a:hover{color:#1a73e8;}
+.all-cat{display:flex;align-items:center;gap:5px;font-weight:500;}
+.sec-nav-right{display:flex;align-items:center;gap:16px;font-size:12px;color:#555;}
+.hero{max-width:1200px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:200px 1fr 220px;gap:12px;}
+.cat-sidebar{background:#fff;border:1px solid #e8e8e8;border-radius:4px;padding:12px 0;}
+.cat-sidebar a{display:block;padding:8px 16px;font-size:13px;color:#444;border-left:3px solid transparent;}
+.cat-sidebar a:hover{background:#f0f7ff;color:#1a73e8;border-left-color:#1a73e8;}
+.cat-sidebar a.active{background:#e8f0fe;color:#1a73e8;border-left-color:#1a73e8;font-weight:500;}
+.hero-banner{background:linear-gradient(135deg,#e8f5e9 0%,#b2dfdb 60%,#80cbc4 100%);border-radius:8px;padding:32px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;min-height:200px;}
+.hero-text h2{font-size:13px;font-weight:400;color:#555;margin-bottom:4px;}
+.hero-text h1{font-size:26px;font-weight:700;color:#1a1a1a;margin-bottom:16px;line-height:1.2;}
+.hero-text .btn-learn{background:#fff;color:#333;border:1px solid #ccc;padding:8px 18px;border-radius:4px;font-size:13px;cursor:pointer;font-weight:500;}
+.hero-banner-img{width:220px;height:160px;object-fit:cover;border-radius:12px;opacity:0.9;}
+.hero-right{display:flex;flex-direction:column;gap:10px;}
+.user-box{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:14px;}
+.btn-join{display:block;background:#1a73e8;color:#fff;text-align:center;padding:8px;border-radius:4px;font-size:13px;font-weight:500;margin-bottom:6px;}
+.btn-login{display:block;border:1px solid #1a73e8;color:#1a73e8;text-align:center;padding:7px;border-radius:4px;font-size:13px;}
+.promo-orange{background:#ff9800;color:#fff;border-radius:6px;padding:10px 12px;font-size:12px;line-height:1.5;}
+.promo-blue{background:#1a73e8;color:#fff;border-radius:6px;padding:10px 12px;font-size:12px;line-height:1.5;cursor:pointer;}
+.promo-orange strong,.promo-blue strong{display:block;font-size:13px;}
+.container{max-width:1200px;margin:0 auto;padding:0 16px;}
+.deals-section{margin:0 auto 16px;max-width:1200px;padding:0 16px;}
+.deals-inner{display:flex;align-items:stretch;border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;background:#fff;}
+.deals-left{background:#fff;padding:16px;min-width:160px;border-right:1px solid #e8e8e8;}
+.deals-left h3{font-size:15px;font-weight:600;margin-bottom:4px;}
+.deals-left p{font-size:12px;color:#888;margin-bottom:10px;}
+.timer{display:flex;gap:4px;}
+.timer-block{background:#333;color:#fff;border-radius:3px;padding:4px 8px;text-align:center;}
+.timer-block span{display:block;font-size:16px;font-weight:700;line-height:1;}
+.timer-block small{font-size:9px;color:#aaa;}
+.deals-products{display:flex;flex:1;overflow-x:auto;}
+.deal-item{min-width:150px;padding:16px;text-align:center;border-right:1px solid #f0f0f0;flex:1;cursor:pointer;}
+.deal-item:last-child{border-right:none;}
+.deal-item:hover{background:#f9f9f9;}
+.deal-img{width:80px;height:80px;object-fit:cover;margin:0 auto 8px;border-radius:6px;display:block;}
+.deal-item p{font-size:13px;margin-bottom:6px;font-weight:500;}
+.badge{display:inline-block;background:#f44336;color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;}
+.cat-section{max-width:1200px;margin:0 auto 16px;padding:0 16px;}
+.cat-section-inner{display:grid;grid-template-columns:200px 1fr;border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;background:#fff;}
+.cat-promo{padding:20px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid #e8e8e8;background:#fafafa;}
+.cat-promo h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+.cat-promo-img{width:100%;height:100px;border-radius:6px;object-fit:cover;margin-bottom:12px;}
+.btn-source{background:#fff;border:1px solid #ccc;padding:7px 16px;border-radius:4px;font-size:13px;cursor:pointer;font-weight:500;}
+.btn-source:hover{background:#f5f5f5;}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.prod-item{padding:14px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;}
+.prod-item:hover{background:#f9f9f9;}
+.prod-item:nth-child(4n){border-right:none;}
+.prod-item:nth-last-child(-n+4){border-bottom:none;}
+.prod-img{width:60px;height:60px;object-fit:cover;border-radius:4px;margin-bottom:8px;display:block;}
+.prod-item p{font-size:13px;font-weight:500;margin-bottom:2px;}
+.prod-item small{color:#888;font-size:12px;}
+.section-title{font-size:18px;font-weight:600;margin-bottom:16px;color:#222;}
+.recommended{max-width:1200px;margin:0 auto 16px;padding:0 16px;}
+.rec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.rec-item{background:#fff;border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .2s;}
+.rec-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.1);}
+.rec-img{width:100%;height:150px;object-fit:cover;display:block;background:#f5f5f5;}
+.rec-info{padding:10px;}
+.rec-info .price{font-size:14px;font-weight:600;color:#222;margin-bottom:4px;}
+.rec-info .desc{font-size:12px;color:#888;line-height:1.4;}
+.extra-services{max-width:1200px;margin:0 auto 16px;padding:0 16px;}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.service-card{background:#fff;border:1px solid #e8e8e8;border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .2s;}
+.service-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.1);}
+.service-img{width:100%;height:120px;object-fit:cover;display:block;}
+.service-info{padding:10px;}
+.service-info p{font-size:13px;font-weight:500;line-height:1.4;}
+.suppliers-region{max-width:1200px;margin:0 auto 16px;padding:0 16px;}
+.suppliers-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:20px;}
+.supplier-item{display:flex;flex-direction:column;gap:3px;}
+.supplier-flag{font-size:18px;margin-bottom:2px;}
+.supplier-name{font-size:13px;font-weight:500;color:#333;}
+.supplier-url{font-size:11px;color:#1a73e8;}
+.newsletter{background:#fff;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;padding:32px 16px;text-align:center;}
+.newsletter h3{font-size:18px;font-weight:600;margin-bottom:6px;}
+.newsletter p{font-size:13px;color:#888;margin-bottom:16px;}
+.newsletter-form{display:flex;justify-content:center;max-width:400px;margin:0 auto;}
+.newsletter-form input{flex:1;padding:10px 14px;border:1px solid #e0e0e0;border-right:none;border-radius:4px 0 0 4px;font-size:13px;outline:none;}
+.newsletter-form button{background:#1a73e8;color:#fff;border:none;padding:10px 20px;border-radius:0 4px 4px 0;font-size:13px;cursor:pointer;font-weight:500;}
+footer{background:#fff;padding:32px 0 0;}
+.footer-top{max-width:1200px;margin:0 auto 24px;padding:0 16px;display:grid;grid-template-columns:220px repeat(4,1fr);gap:24px;}
+.footer-brand p{font-size:12px;color:#888;margin-top:8px;line-height:1.6;}
+.footer-social{display:flex;gap:8px;margin-top:12px;}
+.social-icon{width:28px;height:28px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:#555;}
+.social-icon:hover{background:#1a73e8;color:#fff;}
+.footer-col h4{font-size:14px;font-weight:600;margin-bottom:12px;}
+.footer-col a{display:block;font-size:13px;color:#666;margin-bottom:8px;}
+.footer-col a:hover{color:#1a73e8;}
+.app-badges{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.app-badge{background:#000;color:#fff;border-radius:6px;padding:7px 14px;display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;}
+.app-badge svg{width:18px;height:18px;fill:#fff;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="container">
+    <a href="/" class="logo"><div class="logo-icon">B</div>Brand</a>
+    <form action="/products" method="GET" class="search-bar">
+      <input type="text" name="search" placeholder="Search" value="<%= searchQuery %>"/>
+      <select name="category">
+        <option value="">All category</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="home">Home</option>
+        <option value="accessories">Accessories</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div class="top-icons">
+      <% if(user){ %>
+        <div class="top-icon" onclick="location.href='/profile'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <%= user.name %>
+        </div>
+      <% } else { %>
+        <div class="top-icon" onclick="location.href='/login'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </div>
+      <% } %>
+      <div class="top-icon" onclick="location.href='/cart'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        My cart
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC NAV -->
+<div class="sec-nav">
+  <div class="container">
+    <div class="sec-nav-left">
+      <a href="/products" class="all-cat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        All category
+      </a>
+      <a href="/products?tag=hot">Hot offers</a>
+      <a href="/products?tag=gift">Gift boxes</a>
+      <a href="/products">Projects</a>
+      <a href="/products">Menu item</a>
+      <a href="#">Help ▾</a>
+    </div>
+    <div class="sec-nav-right">
+      <span>English, USD ▾</span>
+      <span>Ship to 🇩🇪 ▾</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="cat-sidebar">
+    <a href="/products?category=automobiles" class="active">Automobiles</a>
+    <a href="/products?category=fashion">Clothes and wear</a>
+    <a href="/products?category=home">Home interiors</a>
+    <a href="/products?category=electronics">Computer and tech</a>
+    <a href="/products?category=tools">Tools, equipments</a>
+    <a href="/products?category=sports">Sports and outdoor</a>
+    <a href="/products?category=animals">Animal and pets</a>
+    <a href="/products?category=machinery">Machinery tools</a>
+    <a href="/products">More category</a>
+  </div>
+
+  <div class="hero-banner">
+    <div class="hero-text">
+      <h2>Latest trending</h2>
+      <h1>Electronic<br/>items</h1>
+      <button class="btn-learn" onclick="location.href='/products?category=electronics'">Learn more</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80" alt="Electronics" class="hero-banner-img"/>
+  </div>
+
+  <div class="hero-right">
+    <div class="user-box">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&q=80" alt="user" style="width:36px;height:36px;border-radius:50%;object-fit:cover;"/>
+        <div>
+          <p style="margin:0;font-size:12px;color:#888;">Hi, user</p>
+          <% if(user){ %>
+            <strong style="font-size:13px;"><%= user.name %></strong>
+          <% } else { %>
+            <strong style="font-size:13px;">let's get started</strong>
+          <% } %>
+        </div>
+      </div>
+      <% if(user){ %>
+        <a href="/profile" class="btn-join">My Profile</a>
+        <a href="/logout" class="btn-login">Log out</a>
+      <% } else { %>
+        <a href="/register" class="btn-join">Join now</a>
+        <a href="/login" class="btn-login">Log in</a>
+      <% } %>
+    </div>
+    <div class="promo-orange"><strong>Get US $10 off</strong>with a new supplier</div>
+    <div class="promo-blue"><strong>Send quotes with</strong>supplier preferences</div>
+  </div>
+</div>
+
+<!-- DEALS & OFFERS -->
+<div class="deals-section">
+  <div class="deals-inner">
+    <div class="deals-left">
+      <h3>Deals and offers</h3>
+      <p>Hygiene equipments</p>
+      <div class="timer">
+        <div class="timer-block"><span>04</span><small>Days</small></div>
+        <div class="timer-block"><span>13</span><small>Hour</small></div>
+        <div class="timer-block"><span>34</span><small>Min</small></div>
+        <div class="timer-block"><span>56</span><small>Sec</small></div>
+      </div>
+    </div>
+    <div class="deals-products">
+      <% 
+      const dealImages = [
+        {url:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150&q=80', name:'Smart watches', discount:'-25%'},
+        {url:'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150&q=80', name:'Laptops', discount:'-15%'},
+        {url:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=150&q=80', name:'GoPro cameras', discount:'-40%'},
+        {url:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150&q=80', name:'Headphones', discount:'-25%'},
+        {url:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=150&q=80', name:'Canon cameras', discount:'-25%'}
+      ];
+      dealImages.forEach(function(d){ %>
+        <div class="deal-item" onclick="location.href='/products'">
+          <img src="<%= d.url %>" alt="<%= d.name %>" class="deal-img"/>
+          <p><%= d.name %></p>
+          <span class="badge"><%= d.discount %></span>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<!-- HOME & OUTDOOR -->
+<div class="cat-section">
+  <div class="cat-section-inner">
+    <div class="cat-promo">
+      <div>
+        <h3>Home and<br/>outdoor</h3>
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80" alt="Home" class="cat-promo-img"/>
+      </div>
+      <button class="btn-source" onclick="location.href='/products?category=home'">Source now</button>
+    </div>
+    <div class="products-grid">
+      <%
+      const homeItems = [
+        {img:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=100&q=80',name:'Soft chairs',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&q=80',name:'Sofa & chair',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=100&q=80',name:'Kitchen dishes',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&q=80',name:'Smart watches',price:'From USD 18'},
+        {img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=100&q=80',name:'Kitchen mixer',price:'From USD 100'},
+        {img:'https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=100&q=80',name:'Blenders',price:'From USD 39'},
+        {img:'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=100&q=80',name:'Home appliance',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=100&q=80',name:'Coffee maker',price:'From USD 10'}
+      ];
+      homeItems.forEach(function(item){ %>
+        <div class="prod-item" onclick="location.href='/products?category=home'">
+          <img src="<%= item.img %>" alt="<%= item.name %>" class="prod-img"/>
+          <p><%= item.name %></p>
+          <small><%= item.price %></small>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<!-- CONSUMER ELECTRONICS -->
+<div class="cat-section">
+  <div class="cat-section-inner">
+    <div class="cat-promo" style="background:#fce4ec;">
+      <div>
+        <h3>Consumer<br/>electronics<br/>and gadgets</h3>
+        <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=300&q=80" alt="Electronics" class="cat-promo-img"/>
+      </div>
+      <button class="btn-source" onclick="location.href='/products?category=electronics'">Source now</button>
+    </div>
+    <div class="products-grid">
+      <%
+      const elecItems = [
+        {img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&q=80',name:'Smart watches',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=100&q=80',name:'Cameras',price:'From USD 89'},
+        {img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&q=80',name:'Headphones',price:'From USD 70'},
+        {img:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=100&q=80',name:'Smart watches',price:'From USD 90'},
+        {img:'https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=100&q=80',name:'Gaming set',price:'From USD 35'},
+        {img:'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100&q=80',name:'Laptops & PC',price:'From USD 340'},
+        {img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100&q=80',name:'Smartphones',price:'From USD 19'},
+        {img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=100&q=80',name:'Electric kettle',price:'From USD 240'}
+      ];
+      elecItems.forEach(function(item){ %>
+        <div class="prod-item" onclick="location.href='/products?category=electronics'">
+          <img src="<%= item.img %>" alt="<%= item.name %>" class="prod-img"/>
+          <p><%= item.name %></p>
+          <small><%= item.price %></small>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE BANNER -->
+<div style="max-width:1200px;margin:0 auto 16px;padding:0 16px;">
+  <div style="background:linear-gradient(135deg,#1565c0,#1a73e8,#42a5f5);border-radius:8px;overflow:hidden;display:grid;grid-template-columns:1fr 360px;">
+    <div style="padding:40px 36px;color:#fff;">
+      <h2 style="font-size:24px;font-weight:700;margin-bottom:12px;line-height:1.3;">An easy way to send<br/>requests to all suppliers</h2>
+      <p style="font-size:13px;opacity:0.85;line-height:1.6;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+    </div>
+    <div style="background:#fff;margin:16px;border-radius:6px;padding:20px;">
+      <h4 style="font-size:15px;font-weight:600;margin-bottom:14px;">Send quote to suppliers</h4>
+      <form action="/send-quote" method="POST">
+        <p style="font-size:12px;color:#888;margin-bottom:6px;">What item you need?</p>
+        <textarea name="description" style="width:100%;border:1px solid #e0e0e0;border-radius:4px;padding:10px;font-size:13px;resize:none;height:60px;outline:none;font-family:inherit;" placeholder="Type more details"></textarea>
+        <div style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+          <span style="font-size:13px;color:#333;">Quantity</span>
+          <input type="number" name="quantity" style="flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:8px;font-size:13px;outline:none;"/>
+          <select name="unit" style="border:1px solid #e0e0e0;border-radius:4px;padding:8px 10px;font-size:13px;background:#fff;outline:none;">
+            <option>Pcs</option><option>Kg</option><option>Box</option>
+          </select>
+        </div>
+        <button type="submit" style="background:#1a73e8;color:#fff;border:none;padding:10px 24px;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;">Send inquiry</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- RECOMMENDED ITEMS - MongoDB se -->
+<div class="recommended">
+  <h2 class="section-title">Recommended items</h2>
+  <div class="rec-grid">
+    <% recommendedProducts.forEach(function(product){ %>
+      <div class="rec-item" onclick="location.href='/product/<%= product._id %>'">
+        <% if(product.image){ %>
+          <img src="<%= product.image %>" alt="<%= product.name %>" class="rec-img"/>
+        <% } else { %>
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80" alt="<%= product.name %>" class="rec-img"/>
+        <% } %>
+        <div class="rec-info">
+          <div class="price">$<%= product.price.toFixed(2) %></div>
+          <div class="desc"><%= product.description ? product.description.substring(0,60) : product.name %>...</div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<!-- EXTRA SERVICES -->
+<div class="extra-services">
+  <h2 class="section-title">Our extra services</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&q=80" alt="Source" class="service-img"/>
+      <div class="service-info"><p>Source from Industry Hubs</p></div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&q=80" alt="Customize" class="service-img"/>
+      <div class="service-info"><p>Customize Your Products</p></div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80" alt="Shipping" class="service-img"/>
+      <div class="service-info"><p>Fast, reliable shipping by ocean or air</p></div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80" alt="Inspection" class="service-img"/>
+      <div class="service-info"><p>Product monitoring and inspection</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPLIERS BY REGION -->
+<div class="suppliers-region">
+  <h2 class="section-title">Suppliers by region</h2>
+  <div class="suppliers-grid">
+    <div class="supplier-item"><div class="supplier-flag">🇦🇪</div><div class="supplier-name">Arabic Emirates</div><div class="supplier-url">shopname.ae</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇦🇺</div><div class="supplier-name">Australia</div><div class="supplier-url">shopname.au</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇺🇸</div><div class="supplier-name">United States</div><div class="supplier-url">shopname.us</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇷🇺</div><div class="supplier-name">Russia</div><div class="supplier-url">shopname.ru</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇮🇹</div><div class="supplier-name">Italy</div><div class="supplier-url">shopname.it</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇩🇰</div><div class="supplier-name">Denmark</div><div class="supplier-url">denmark.com.uk</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇫🇷</div><div class="supplier-name">France</div><div class="supplier-url">shopname.com.fr</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇦🇪</div><div class="supplier-name">Arabic Emirates</div><div class="supplier-url">shopname.ae</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇨🇳</div><div class="supplier-name">China</div><div class="supplier-url">shopname.cn</div></div>
+    <div class="supplier-item"><div class="supplier-flag">🇬🇧</div><div class="supplier-name">Great Britain</div><div class="supplier-url">shopname.co.uk</div></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h3>Subscribe on our newsletter</h3>
+  <p>Get daily news on upcoming offers from many suppliers all over the world.</p>
+  <form action="/subscribe" method="POST" class="newsletter-form">
+    <input type="email" name="email" placeholder="✉  Email"/>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="margin-bottom:8px;"><div class="logo-icon">B</div>Brand</a>
+      <p>Best information about the company goes here but now lorem ipsum is</p>
+      <div class="footer-social">
+        <div class="social-icon">f</div><div class="social-icon">t</div><div class="social-icon">in</div><div class="social-icon">G+</div><div class="social-icon">@</div>
+      </div>
+    </div>
+    <div class="footer-col"><h4>About</h4><a href="#">About Us</a><a href="#">Find store</a><a href="/products">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Partnership</h4><a href="#">About Us</a><a href="#">Find store</a><a href="/products">Categories</a><a href="#">Blogs</a></div>
+    <div class="footer-col"><h4>Information</h4><a href="#">Help Center</a><a href="#">Money Refund</a><a href="#">Shipping</a><a href="#">Contact us</a></div>
+    <div class="footer-col"><h4>For users</h4><a href="/login">Login</a><a href="/register">Register</a><a href="#">Settings</a><a href="#">My Orders</a></div>
+    <div class="footer-col">
+      <h4>Get app</h4>
+      <div class="app-badges">
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><div><div style="font-size:9px;opacity:0.7;">Download on the</div><div style="font-size:12px;font-weight:600;">App Store</div></div></div>
+        <div class="app-badge"><svg viewBox="0 0 24 24"><path d="M3.18 23.76c.3.17.63.24.97.21l12.5-7.21-2.61-2.62-10.86 9.62zM.27 1.5C.1 1.83 0 2.22 0 2.68v18.64c0 .46.1.85.27 1.18l.06.06 10.44-10.44v-.24L.33 1.44l-.06.06zM20.9 10.24l-2.82-1.63-2.94 2.94 2.94 2.94 2.85-1.64c.81-.47.81-1.23-.03-1.61zM4.15.24L16.65 7.45l-2.61 2.61L3.18.24C3.5.07 3.87.1 4.15.24z"/></svg><div><div style="font-size:9px;opacity:0.7;">Get it on</div><div style="font-size:12px;font-weight:600;">Google Play</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid #e8e8e8;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;">
+    <p style="font-size:12px;color:#888;">© <%= new Date().getFullYear() %> Ecommerce.</p>
+    <select style="border:1px solid #e0e0e0;padding:4px 10px;border-radius:4px;font-size:12px;background:#fff;outline:none;"><option>🇬🇧 English</option></select>
+  </div>
+</footer>
+
+<script>
+function updateTimer(){
+  const blocks=document.querySelectorAll('.timer-block span');
+  if(blocks.length<4)return;
+  let[d,h,m,s]=[parseInt(blocks[0].textContent),parseInt(blocks[1].textContent),parseInt(blocks[2].textContent),parseInt(blocks[3].textContent)];
+  s--;if(s<0){s=59;m--;}if(m<0){m=59;h--;}if(h<0){h=23;d--;}if(d<0){d=0;h=0;m=0;s=0;}
+  blocks[0].textContent=String(d).padStart(2,'0');
+  blocks[1].textContent=String(h).padStart(2,'0');
+  blocks[2].textContent=String(m).padStart(2,'0');
+  blocks[3].textContent=String(s).padStart(2,'0');
+}
+setInterval(updateTimer,1000);
+</script>
+</body>
+</html>

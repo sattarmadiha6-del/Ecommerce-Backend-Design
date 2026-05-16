@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mobile Accessory – Brand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#333;background:#fff;max-width:480px;margin:0 auto;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+/* TOP NAV */
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #f0f0f0;}
+.back-btn{font-size:20px;cursor:pointer;color:#333;}
+.page-title{font-size:16px;font-weight:600;}
+.top-icons{display:flex;gap:14px;}
+.top-icons svg{width:22px;height:22px;stroke:#333;fill:none;stroke-width:1.8;}
+
+/* SEARCH */
+.search-bar{margin:10px 16px;display:flex;align-items:center;background:#f5f5f5;border-radius:8px;padding:9px 12px;gap:8px;}
+.search-bar input{flex:1;border:none;background:none;outline:none;font-size:13px;}
+.search-bar svg{width:16px;height:16px;stroke:#999;fill:none;stroke-width:2;}
+
+/* CAT SCROLL */
+.cat-scroll{display:flex;gap:8px;overflow-x:auto;padding:8px 16px;scrollbar-width:none;}
+.cat-scroll::-webkit-scrollbar{display:none;}
+.cat-chip{white-space:nowrap;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #e0e0e0;color:#1a73e8;background:#fff;}
+.cat-chip.active{background:#e8f0fe;border-color:#1a73e8;}
+
+/* FILTERS */
+.filter-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #f0f0f0;border-top:1px solid #f0f0f0;}
+.filter-left{display:flex;gap:8px;}
+.filter-btn{display:flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;color:#333;cursor:pointer;background:#fff;}
+.filter-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+.view-btns{display:flex;gap:4px;}
+.view-btn{width:30px;height:30px;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;}
+.view-btn.active{background:#1a73e8;border-color:#1a73e8;}
+.view-btn svg{width:14px;height:14px;fill:currentColor;stroke:none;}
+.view-btn.active svg{fill:#fff;}
+
+/* ACTIVE FILTERS */
+.active-filters{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;}
+.active-filters::-webkit-scrollbar{display:none;}
+.filter-tag{display:flex;align-items:center;gap:4px;padding:4px 10px;border:1.5px solid #1a73e8;border-radius:20px;font-size:12px;color:#1a73e8;white-space:nowrap;}
+.filter-tag span{cursor:pointer;font-size:14px;}
+
+/* PRODUCT LIST */
+.product-list{padding:0 16px;}
+.prod-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f5f5f5;cursor:pointer;}
+.prod-item:last-child{border-bottom:none;}
+.prod-thumb{width:80px;height:80px;min-width:80px;border-radius:8px;overflow:hidden;background:#f8f8f8;}
+.prod-thumb img{width:100%;height:100%;object-fit:cover;}
+.prod-details{flex:1;}
+.prod-name{font-size:13px;font-weight:500;color:#222;margin-bottom:4px;line-height:1.4;}
+.prod-price{font-size:16px;font-weight:700;color:#222;margin-bottom:4px;}
+.prod-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.stars{color:#ffc107;font-size:12px;}
+.rating-num{font-size:12px;color:#555;font-weight:500;}
+.orders{font-size:12px;color:#888;}
+.free-ship{font-size:12px;color:#26a541;font-weight:500;}
+
+/* YOU MAY LIKE */
+.section-title{font-size:15px;font-weight:700;padding:16px 16px 10px;}
+.like-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 16px 16px;scrollbar-width:none;}
+.like-scroll::-webkit-scrollbar{display:none;}
+.like-card{min-width:120px;border:1px solid #f0f0f0;border-radius:8px;overflow:hidden;cursor:pointer;}
+.like-img{width:120px;height:110px;background:#f8f8f8;overflow:hidden;}
+.like-img img{width:100%;height:100%;object-fit:cover;}
+.like-info{padding:8px;}
+.like-price{font-size:13px;font-weight:700;color:#222;margin-bottom:3px;}
+.like-name{font-size:11px;color:#888;line-height:1.3;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <span class="back-btn" onclick="history.back()">←</span>
+  <span class="page-title">Mobile accessory</span>
+  <div class="top-icons">
+    <a href="/mobile-cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </a>
+    <a href="/profile">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<form action="/mobile-items" method="GET" class="search-bar">
+  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <input type="text" name="search" placeholder="Search" value="<%= search || '' %>"/>
+</form>
+
+<!-- CATEGORIES -->
+<div class="cat-scroll">
+  <div class="cat-chip active">Tablets</div>
+  <div class="cat-chip">Phones</div>
+  <div class="cat-chip">Ipads</div>
+  <div class="cat-chip">Ipod</div>
+  <div class="cat-chip">Accessories</div>
+</div>
+
+<!-- FILTER ROW -->
+<div class="filter-row">
+  <div class="filter-left">
+    <div class="filter-btn">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="15" y1="18" x2="21" y2="18"/></svg>
+      Sort: Newest
+    </div>
+    <div class="filter-btn">
+      <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      Filter (3)
+    </div>
+  </div>
+  <div class="view-btns">
+    <div class="view-btn active">
+      <svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+    </div>
+    <div class="view-btn">
+      <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="3" rx="1"/><rect x="1" y="7" width="14" height="3" rx="1"/><rect x="1" y="12" width="14" height="3" rx="1"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE FILTERS -->
+<div class="active-filters">
+  <div class="filter-tag">Huawei <span>×</span></div>
+  <div class="filter-tag">Apple <span>×</span></div>
+  <div class="filter-tag">64GB <span>×</span></div>
+</div>
+
+<!-- PRODUCT LIST -->
+<div class="product-list">
+  <% if(products && products.length > 0){ %>
+    <% products.forEach(function(p){ %>
+      <div class="prod-item" onclick="location.href='/product/<%= p._id %>'">
+        <div class="prod-thumb">
+          <img src="<%= p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200' %>" alt="<%= p.name %>"/>
+        </div>
+        <div class="prod-details">
+          <div class="prod-name"><%= p.name %></div>
+          <div class="prod-price">$<%= p.price.toFixed(2) %></div>
+          <div class="prod-meta">
+            <span class="stars">
+              <% for(let i=1;i<=5;i++){ %><%= i<=(p.rating||0) ? '★' : '☆' %><% } %>
+            </span>
+            <span class="rating-num"><%= p.rating || 0 %></span>
+            <span class="orders"><%= p.orderCount || 0 %> orders</span>
+            <% if(p.freeShipping){ %>
+              <span class="free-ship">Free Shipping</span>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <div style="text-align:center;padding:40px;color:#888;">
+      <p>No products found</p>
+      <a href="/mobile-items" style="color:#1a73e8;margin-top:8px;display:inline-block;">View all</a>
+    </div>
+  <% } %>
+</div>
+
+<!-- YOU MAY LIKE -->
+<div class="section-title">You may also like</div>
+<div class="like-scroll">
+  <% if(products && products.length > 0){ %>
+    <% products.slice(0,5).forEach(function(p){ %>
+      <div class="like-card" onclick="location.href='/product/<%= p._id %>'">
+        <div class="like-img">
+          <img src="<%= p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200' %>" alt="<%= p.name %>"/>
+        </div>
+        <div class="like-info">
+          <div class="like-price">$<%= p.price.toFixed(2) %></div>
+          <div class="like-name"><%= p.name %></div>
+        </div>
+      </div>
+    <% }); %>
+  <% } %>
+</div>
+
+</body>
+</html>
