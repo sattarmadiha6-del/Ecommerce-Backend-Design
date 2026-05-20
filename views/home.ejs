@@ -118,6 +118,102 @@ footer{background:#fff;padding:32px 0 0;}
 .app-badges{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
 .app-badge{background:#000;color:#fff;border-radius:6px;padding:7px 14px;display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;}
 .app-badge svg{width:18px;height:18px;fill:#fff;}
+@media (max-width: 768px){
+
+.top-nav .container,
+.sec-nav .container{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.search-bar{
+    width:100%;
+}
+
+.top-icons{
+    width:100%;
+    justify-content:space-around;
+}
+
+.sec-nav-left{
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.sec-nav-right{
+    width:100%;
+    justify-content:space-between;
+}
+
+.hero{
+    grid-template-columns:1fr;
+}
+
+.hero-banner{
+    flex-direction:column;
+    text-align:center;
+    gap:20px;
+    padding:20px;
+}
+
+.hero-banner-img{
+    width:100%;
+    height:auto;
+}
+
+.hero-right{
+    width:100%;
+}
+
+.deals-inner{
+    flex-direction:column;
+}
+
+.deals-products{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.cat-section-inner{
+    grid-template-columns:1fr;
+}
+
+.products-grid{
+    grid-template-columns:1fr 1fr;
+}
+
+.rec-grid{
+    grid-template-columns:1fr 1fr;
+}
+
+.services-grid{
+    grid-template-columns:1fr;
+}
+
+.suppliers-grid{
+    grid-template-columns:1fr 1fr;
+}
+
+.footer-top{
+    grid-template-columns:1fr;
+}
+
+.newsletter-form{
+    flex-direction:column;
+}
+
+.newsletter-form input{
+    border-right:1px solid #e0e0e0;
+    border-radius:4px;
+    margin-bottom:10px;
+}
+
+.newsletter-form button{
+    border-radius:4px;
+}
+
+}
 </style>
 </head>
 <body>
